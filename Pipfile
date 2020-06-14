@@ -10,6 +10,9 @@ django-rest-xauth = "*"
 pytesseract = "*"
 opencv-python = "*"
 argon2-cffi = "*"
+celery = "*"
+django-celery-results = "*"
+django-storages = {extras = ["google"], version = "*"}
 
 [requires]
 python_version = "3.8"

@@ -37,9 +37,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'article.apps.ArticleConfig',
+    'incentive.apps.IncentiveConfig',
+    'job.apps.JobConfig',
+    'receipt.apps.ReceiptConfig',
+    'shop.apps.ShopConfig',
+    'shopping_list.apps.ShoppingListConfig',
     'user.apps.UserConfig',
     'xauth',
     'rest_framework',
+    'django_celery_results',
 ]
 
 MIDDLEWARE = [
@@ -63,22 +70,6 @@ PASSWORD_HASHERS = [
 
 ROOT_URLCONF = 'xmarket.urls'
 
-EMAIL_HOST = os.environ.get('EMAIL_HOST', settings.EMAIL_HOST)
-
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', settings.EMAIL_HOST_USER)
-
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', settings.EMAIL_HOST_PASSWORD)
-
-EMAIL_USE_TLS = True
-
-EMAIL_PORT = 587
-
-# EMAIL_PORT = 1025
-
-EMAIL_TIMEOUT = 20  # seconds
-
-AUTH_USER_MODEL = 'user.User'
-
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'xauth.authentication.BasicTokenAuthentication',
@@ -86,9 +77,13 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
     ],
     'EXCEPTION_HANDLER': 'xauth.utils.exceptions.exception_handler',
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
 }
 
 XAUTH = {
+    'APP_NAME': 'Xently Markets',
     'USER_PROFILE_SERIALIZER': 'user.serializers.ProfileSerializer',
     # 'USER_LOOKUP_FIELD': 'username',
     # 'PROFILE_ENDPOINT': r'profile/(?P<username>\w+)/',
@@ -97,7 +92,7 @@ XAUTH = {
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'), ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -114,7 +109,6 @@ WSGI_APPLICATION = 'xmarket.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -124,7 +118,6 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -139,6 +132,26 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+AUTH_USER_MODEL = 'user.User'
+
+EMAIL_HOST = os.environ.get('EMAIL_HOST', settings.EMAIL_HOST)
+
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', settings.EMAIL_HOST_USER)
+
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', settings.EMAIL_HOST_PASSWORD)
+
+EMAIL_USE_TLS = True
+
+EMAIL_PORT = 587
+
+# EMAIL_PORT = 1025
+
+EMAIL_TIMEOUT = 20  # seconds
+
+CELERY_RESULT_BACKEND = 'django-db'
+
+CELERY_CACHE_BACKEND = 'django-cache'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/

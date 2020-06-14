@@ -12,21 +12,21 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 
+from django.conf import settings
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '%h4fat1%!e%-)!%+g@*t+k=+t*bd-apl#+mvyrm6yt)@s%i_f6'
+SECRET_KEY = os.environ.get('SECRET_KEY', '%h4fat1%!e%-)!%+g@*t+k=+t*bd-apl#+mvyrm6yt)@s%i_f6')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'user.apps.UserConfig',
+    'xauth',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -49,7 +52,47 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# Use recommended argon2 for password hashing
+# https://docs.djangoproject.com/en/3.0/topics/auth/passwords/#using-argon2-with-django
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.Argon2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+]
+
 ROOT_URLCONF = 'xmarket.urls'
+
+EMAIL_HOST = os.environ.get('EMAIL_HOST', settings.EMAIL_HOST)
+
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', settings.EMAIL_HOST_USER)
+
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', settings.EMAIL_HOST_PASSWORD)
+
+EMAIL_USE_TLS = True
+
+EMAIL_PORT = 587
+
+# EMAIL_PORT = 1025
+
+EMAIL_TIMEOUT = 20  # seconds
+
+AUTH_USER_MODEL = 'user.User'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'xauth.authentication.BasicTokenAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+    'EXCEPTION_HANDLER': 'xauth.utils.exceptions.exception_handler',
+}
+
+XAUTH = {
+    'USER_PROFILE_SERIALIZER': 'user.serializers.ProfileSerializer',
+    # 'USER_LOOKUP_FIELD': 'username',
+    # 'PROFILE_ENDPOINT': r'profile/(?P<username>\w+)/',
+}
 
 TEMPLATES = [
     {
@@ -69,7 +112,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'xmarket.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
@@ -79,7 +121,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -99,7 +140,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
@@ -112,7 +152,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/

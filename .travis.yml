@@ -1,43 +1,13 @@
 language: python
 dist: bionic
-matrix:
-  fast_finish: true
-  include:
-    - { python: "3.6", env: DJANGO=2.2 }
-    - { python: "3.6", env: DJANGO=3.0 }
-    - { python: "3.6", env: DJANGO=3.1 }
-    - { python: "3.6", env: DJANGO=master }
-
-    - { python: "3.7", env: DJANGO=2.2 }
-    - { python: "3.7", env: DJANGO=3.0 }
-    - { python: "3.7", env: DJANGO=3.1 }
-    - { python: "3.7", env: DJANGO=master }
-
-    - { python: "3.8", env: DJANGO=3.0 }
-    - { python: "3.8", env: DJANGO=3.1 }
-    - { python: "3.8", env: DJANGO=master }
-
-    - { python: "3.8", env: TOXENV=base }
-    - { python: "3.8", env: TOXENV=lint }
-    - { python: "3.8", env: TOXENV=docs }
-
-    - python: "3.8"
-      env: TOXENV=dist
-      script:
-        - python setup.py bdist_wheel
-        - rm -r django_rest_xauth.egg-info
-        - tox --installpkg ./dist/django_rest_xauth-*.whl
-        - tox  # test sdist
-
-  allow_failures:
-    - env: DJANGO=master
+python:
+  - "3.8"
 install:
-  - pip install pipenv
+  - pip install --upgrade pipenv
   - pipenv install
   - pipenv install coveralls tox-travis
 script:
-  - tox
-  - coverage run --source='xauth' manage.py test
+  - coverage run --source='.' manage.py test
 after_success:
   - coveralls
 notifications:

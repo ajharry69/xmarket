@@ -1,20 +1,44 @@
 -i https://pypi.org/simple
+amqp==2.6.0; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'
 argon2-cffi==20.1.0
 asgiref==3.2.7; python_version >= '3.5'
+billiard==3.6.3.0
+cachetools==4.1.0; python_version ~= '3.5'
+celery==4.4.5
+certifi==2020.4.5.2
 cffi==1.14.0
+chardet==3.0.4
 cryptography==2.9.2; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'
+django-celery-results==1.2.1
 django-render-block==0.6
 django-rest-xauth==1.0.6
+django-storages[google]==1.9.1
 django-templated-email==2.3.0
 django==3.0.7; python_version >= '3.6'
 djangorestframework==3.11.0; python_version >= '3.5'
+future==0.18.2; python_version >= '2.6' and python_version not in '3.0, 3.1, 3.2, 3.3'
+google-api-core==1.20.0; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
+google-auth==1.17.2; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
+google-cloud-core==1.3.0; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
+google-cloud-storage==1.29.0
+google-resumable-media==0.5.1; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'
+googleapis-common-protos==1.52.0; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
+idna==2.9; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
 jwcrypto==0.7
+kombu==4.6.10; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'
 numpy==1.18.5; python_version >= '3.5'
 opencv-python==4.2.0.34
 pillow==7.1.2; python_version >= '3.5'
+protobuf==3.12.2
+pyasn1-modules==0.2.8
+pyasn1==0.4.8
 pycparser==2.20; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
 pytesseract==0.3.4
 pytz==2020.1
+requests==2.23.0; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'
+rsa==4.6; python_version >= '3'
 six==1.15.0; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
 sqlparse==0.3.1; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
 timeago==1.0.14
+urllib3==1.25.9; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4' and python_version < '4'
+vine==1.3.0; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'

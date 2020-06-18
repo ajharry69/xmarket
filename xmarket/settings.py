@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', '%h4fat1%!e%-)!%+g@*t+k=+t*bd-apl#+mvy
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['10.0.2.2', '127.0.0.1', ]
 
 # Application definition
 
@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'xauth',
     'rest_framework',
     'django_celery_results',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -85,6 +86,7 @@ REST_FRAMEWORK = {
 XAUTH = {
     'APP_NAME': 'Xently Markets',
     'USER_PROFILE_SERIALIZER': 'user.serializers.ProfileSerializer',
+    'WRAP_DRF_RESPONSE': True,
     # 'USER_LOOKUP_FIELD': 'username',
     # 'PROFILE_ENDPOINT': r'profile/(?P<username>\w+)/',
 }
@@ -170,3 +172,24 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+PAYMENT = {
+    'MPESA': {
+        'CONSUMER_KEY': os.environ.get('MPESA_CONSUMER_KEY', ),
+        'CONSUMER_SECRET': os.environ.get('MPESA_CONSUMER_SECRET', ),
+        'LNM': {
+            'SHORTCODE': os.environ.get('MPESA_LNM_SHORTCODE', ),
+            'PASSKEY': os.environ.get('MPESA_LNM_PASSKEY', ),
+        },
+        'SECURITY_CREDENTIALS': os.environ.get('MPESA_SECURITY_CREDENTIALS', ),
+    },
+    'BRAINTREE': {
+
+    },
+    'STRIPE': {
+        'API_KEY': os.environ.get('STRIPE_API_KEY', ),
+    },
+    'SQUARE': {
+
+    },
+}

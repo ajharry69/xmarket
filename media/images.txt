@@ -1,0 +1,3 @@
+media/naivas.jpg
+media/tuskys.jpeg
+media/ugado.jpg

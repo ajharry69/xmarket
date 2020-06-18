@@ -8,11 +8,16 @@ verify_ssl = true
 [packages]
 django-rest-xauth = "*"
 pytesseract = "*"
-opencv-python = "*"
 argon2-cffi = "*"
 celery = "*"
 django-celery-results = "*"
 django-storages = {extras = ["google"], version = "*"}
+pycountry = "*"
+django-extensions = "*"
+geopy = "*"
+stripe = "*"
+squareup = "*"
+braintree = "*"
 
 [requires]
 python_version = "3.8"

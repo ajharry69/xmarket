@@ -77,7 +77,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ],
-    'EXCEPTION_HANDLER': 'xauth.utils.exceptions.exception_handler',
+    'EXCEPTION_HANDLER': 'user.exceptions.exception_handler',
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
@@ -85,10 +85,18 @@ REST_FRAMEWORK = {
 
 XAUTH = {
     'APP_NAME': 'Xently Markets',
-    'USER_PROFILE_SERIALIZER': 'user.serializers.ProfileSerializer',
-    'WRAP_DRF_RESPONSE': True,
-    # 'USER_LOOKUP_FIELD': 'username',
-    # 'PROFILE_ENDPOINT': r'profile/(?P<username>\w+)/',
+    'SERIALIZER_CLASSES': {
+        'PROFILE': {
+            'REQUEST': 'user.serializers.profile.request.ProfileRequestWithPhotoSerializer',
+            'RESPONSE': 'user.serializers.profile.response.ProfileResponseSerializer',
+        },
+        'SIGNUP': {
+            'REQUEST': 'user.serializers.signup.request.SignUpRequestWithPhotoSerializer',
+        },
+    },
+    # 'WRAP_DRF_RESPONSE': True,
+    'USER_LOOKUP_FIELD': 'username',
+    'PROFILE_ENDPOINT': r'profile/(?P<username>\w+)/',
 }
 
 TEMPLATES = [
@@ -172,6 +180,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 PAYMENT = {
     'MPESA': {

@@ -1,11 +1,10 @@
 from rest_framework import serializers
 
 
-class StripeClientSecretSerializer(serializers.Serializer):
-    amount = serializers.FloatField()
+class RequestSerializer(serializers.Serializer):
 
     def update(self, instance, validated_data):
-        pass
+        return validated_data
 
     def create(self, validated_data):
-        pass
+        return validated_data

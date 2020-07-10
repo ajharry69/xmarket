@@ -21,7 +21,7 @@ class PostalAddress(models.Model):
 
 class LocationAddress(models.Model):
     __DEFAULT_COUNTRY = pycountry.countries.get(alpha_2='KE').name
-    __COUNTRIES = [(c.name, c) for c in list(pycountry.countries)]
+    __COUNTRIES = [(c.name, c.name) for c in list(pycountry.countries)]
     shop = models.OneToOneField(Shop, on_delete=models.CASCADE)
     town = models.CharField(blank=True, null=True, max_length=100, )
     country = models.CharField(choices=__COUNTRIES, default=__DEFAULT_COUNTRY, blank=True, null=True, max_length=100, )

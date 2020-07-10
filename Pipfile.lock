@@ -204,11 +204,11 @@
         },
         "django-rest-xauth": {
             "hashes": [
-                "sha256:05f297cc75d01da173354dd5da3ee482f6d389a24dcc770409a67fa9dded6fba",
-                "sha256:e8bfe58eaf9a4e025352b8581adbf4206875380bb71de70bf905732371dfec0b"
+                "sha256:6ad8a782a214b5217bd108510eac9fd739cfd89a5a48f1aa8ac6a9176fc6c8b1",
+                "sha256:ee13852422b0d5d2f7fb7873215dd0422fc73bd933fc8282f41265a9d55f57e3"
             ],
             "index": "pypi",
-            "version": "==1.0.8"
+            "version": "==1.0.9"
         },
         "django-storages": {
             "extras": [
@@ -511,8 +511,8 @@
         "rsa": {
             "hashes": [
                 "sha256:109ea5a66744dd859bf16fe904b8d8b627adafb9408753161e766a92e7d681fa",
-                "sha256:6166864e23d6b5195a5cfed6cd9fed0fe774e226d8f854fcb23b7bbef0350233",
-                "sha256:23778f5523461cf86ae075f9482a99317f362bca752ae57cb118044066f4026f"
+                "sha256:23778f5523461cf86ae075f9482a99317f362bca752ae57cb118044066f4026f",
+                "sha256:6166864e23d6b5195a5cfed6cd9fed0fe774e226d8f854fcb23b7bbef0350233"
             ],
             "markers": "python_version >= '3'",
             "version": "==4.6"

@@ -7,14 +7,15 @@ from xauth import models as xmodels
 from xauth.utils import valid_str
 
 
-def resize_image(photo_path, height=250, width=250):
+def resize_image(photo_path, height=450, width=450, square: bool = True):
     if valid_str(photo_path):
         image = Image.open(photo_path)
-        # resize only photos with height and width greater than 250
-        if image.width > width or image.height > height:
-            output_size = (width, height)
-            image.thumbnail(output_size)
-            image.save(photo_path)
+        smallest_dimen = min(width, height)
+        smallest_img_dimen = min(image.width, image.height)
+        resize_dimen = min(smallest_dimen, smallest_img_dimen)
+        output_size = (resize_dimen, resize_dimen) if square else (width, height)
+        image.thumbnail(output_size)
+        image.save(photo_path)
 
 
 def photo_upload_path(instance, photo):
@@ -22,7 +23,8 @@ def photo_upload_path(instance, photo):
     creates an upload path for `photo` with `photo` renamed to hashed value of `instance.id`
     """
     ext = photo.split('.')[-1]
-    encoded_id = f"{instance.id}".encode(encoding='utf8', errors='replace')
+    id = instance.id
+    encoded_id = f"{id if id else instance.username}".encode(encoding='utf8', errors='replace')
     hashed_id = md5(encoded_id).hexdigest()
     return os.path.join('images/profile/', f"{hashed_id}.{ext}")
 

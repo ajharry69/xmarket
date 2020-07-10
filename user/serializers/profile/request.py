@@ -2,7 +2,7 @@ import json
 
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
-from xauth.serializers import RequestSerializer
+from user.serializers import RequestSerializer
 
 
 class ProfileRequestSerializer(serializers.ModelSerializer):

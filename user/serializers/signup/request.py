@@ -1,8 +1,8 @@
 import json
 
 from rest_framework import serializers
-from xauth.serializers import RequestSerializer
 
+from user.serializers import RequestSerializer
 from user.serializers.profile.request import ProfileRequestSerializer
 
 

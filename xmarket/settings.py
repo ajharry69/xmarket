@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'job.apps.JobConfig',
     'receipt.apps.ReceiptConfig',
     'shop.apps.ShopConfig',
+    'products.apps.ProductsConfig',
     'shopping_list.apps.ShoppingListConfig',
     'user.apps.UserConfig',
     'xauth',

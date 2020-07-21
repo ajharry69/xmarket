@@ -10,11 +10,11 @@ celery==4.4.6
 certifi==2020.6.20
 cffi==1.14.0
 chardet==3.0.4
-cryptography==2.9.2; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'
+cryptography==3.0; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'
 deprecation==2.1.0
 django-celery-results==1.2.1
-django-extensions==3.0.2
-django-render-block==0.6
+django-extensions==3.0.3
+django-render-block==0.7; python_version >= '3.5'
 django-rest-xauth==1.1.0
 django-storages[google]==1.9.1
 django-templated-email==2.3.0
@@ -23,8 +23,8 @@ djangorestframework==3.11.0; python_version >= '3.5'
 future==0.18.2; python_version >= '2.6' and python_version not in '3.0, 3.1, 3.2, 3.3'
 geographiclib==1.50
 geopy==2.0.0
-google-api-core==1.21.0; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
-google-auth==1.19.0; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
+google-api-core==1.22.0; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
+google-auth==1.19.2; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
 google-cloud-core==1.3.0; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
 google-cloud-storage==1.29.0
 google-resumable-media==0.5.1; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'
@@ -50,7 +50,7 @@ rsa==4.6; python_version >= '3'
 six==1.15.0; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
 sqlparse==0.3.1; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'
 squareup==6.0.0.20200625
-stripe==2.48.0
+stripe==2.49.0
 timeago==1.0.14
 urllib3==1.25.9; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4' and python_version < '4'
 vine==1.3.0; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'

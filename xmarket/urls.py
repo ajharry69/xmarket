@@ -17,21 +17,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from django.urls import path, include
-from rest_framework import routers
-
-from products.views import ProductsViewSet
-from shop.views import ShopsViewSet
-
-router = routers.DefaultRouter()
-router.register(r'shops', ShopsViewSet)
-router.register(r'products', ProductsViewSet)
+from django.urls import include, re_path
 
 urlpatterns = [
-    path('accounts/', include('user.urls')),
-    path('api/v1/', include(router.urls)),
-    path('admin/', admin.site.urls),
-    path('admin-api/', include('rest_framework.urls', namespace='rest_framework')),
+    re_path(r'^api/v1/', include('api.urls')),
+    re_path(r'^admin/', admin.site.urls),
+    re_path(r'^admin-api/', include('rest_framework.urls', namespace='rest_framework')),
 ]
 
 if settings.DEBUG:

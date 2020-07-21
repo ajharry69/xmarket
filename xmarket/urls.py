@@ -18,9 +18,18 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import path, include
+from rest_framework import routers
+
+from products.views import ProductsViewSet
+from shop.views import ShopsViewSet
+
+router = routers.DefaultRouter()
+router.register(r'shops', ShopsViewSet)
+router.register(r'products', ProductsViewSet)
 
 urlpatterns = [
     path('accounts/', include('user.urls')),
+    path('api/v1/', include(router.urls)),
     path('admin/', admin.site.urls),
     path('admin-api/', include('rest_framework.urls', namespace='rest_framework')),
 ]

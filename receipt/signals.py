@@ -1,7 +1,7 @@
+import pytesseract
 from django.db.models.signals import post_save
 
 from .models import Receipt
-import pytesseract
 
 
 def on_receipt_post_save(sender, instance, created, **kwargs):

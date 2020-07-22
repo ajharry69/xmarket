@@ -2,10 +2,12 @@ from django.urls import include, re_path
 from rest_framework import routers
 
 from products.views import ProductDetailView, ProductListView
+from receipt.views import ReceiptsViewSet
 from shop.views import ShopsViewSet
 
 router = routers.DefaultRouter()
 router.register(r'shops', ShopsViewSet)
+router.register(r'receipts', ReceiptsViewSet)
 
 urlpatterns = [
     re_path(r'^', include(router.urls)),

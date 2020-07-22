@@ -1,5 +1,6 @@
 import pycountry
 from django.db import models
+from rest_framework.reverse import reverse
 
 
 class Shop(models.Model):
@@ -15,6 +16,9 @@ class Shop(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_products_url(self):
+        return reverse('product-list', kwargs={'shop_id': self.id})
 
 
 class PostalAddress(models.Model):

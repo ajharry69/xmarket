@@ -26,11 +26,20 @@ class ShopSerializer(serializers.HyperlinkedModelSerializer):
     postal_address = PostalAddressSerializer(allow_null=True, default=None, source='postaladdress', )
     address = PhysicalAddressSerializer(allow_null=True, default=None, source='physicaladdress', )
     coordinates = CoordinatesSerializer(allow_null=True, default=None, )
+    products_url = serializers.SerializerMethodField(read_only=True, )
 
     class Meta:
         model = Shop
         fields = (
-            'url', 'id', 'name', 'tax_pin', 'phone', 'email', 'postal_address', 'coordinates', 'address',)
+            'url', 'id', 'name', 'tax_pin', 'phone', 'email', 'postal_address', 'coordinates', 'address',
+            'products_url',)
+
+    def get_products_url(self, shop):
+        url = None
+        try:
+            url = self.context.get('request').build_absolute_uri(shop.get_products_url())
+        finally:
+            return url
 
     def update(self, instance, validated_data):
         postal_address = self._postal_address_data(validated_data)

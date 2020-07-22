@@ -141,3 +141,4 @@ dmypy.json
 .pyre/
 /analyzer.py
 /media/images/
+/media/

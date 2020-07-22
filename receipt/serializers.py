@@ -4,15 +4,12 @@ from receipt import models
 
 
 class ReceiptSerializer(serializers.HyperlinkedModelSerializer):
-    receipt = serializers.ImageField(write_only=True, )
-    receipt_url = serializers.SerializerMethodField(read_only=True, method_name='get_receipt', )
+    receipt = serializers.ImageField(write_only=True, required=True, )
+    url = serializers.SerializerMethodField(read_only=True, method_name='get_receipt', )
 
     class Meta:
         model = models.Receipt
-        fields = ('receipt', 'receipt_url',)
-
-    def to_representation(self, instance):
-        return self.get_receipt(instance)
+        fields = ('receipt', 'url',)
 
     def get_receipt(self, receipt):
         url = None

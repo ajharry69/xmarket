@@ -1,14 +1,13 @@
 from rest_framework import viewsets, parsers, pagination
 from rest_framework.response import Response
-from xauth.permissions import IsOwnerOrSuperuser
 
-from receipt import serializers, models
+from receipt import serializers, models, permissions
 
 
 class ReceiptsViewSet(viewsets.ModelViewSet):
     queryset = models.Receipt.objects.all()
     serializer_class = serializers.ReceiptSerializer
-    permission_classes = [IsOwnerOrSuperuser]
+    permission_classes = [permissions.IsOwnerOrSuperuser]
     parser_classes = [parsers.MultiPartParser, parsers.JSONParser, ]
     pagination_class = pagination.LimitOffsetPagination
 

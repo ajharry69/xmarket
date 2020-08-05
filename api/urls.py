@@ -5,11 +5,13 @@ from article.views import ArticleViewSet
 from products.views import ProductDetailView, ProductListView
 from receipt.views import ReceiptsViewSet
 from shop.views import ShopsViewSet
+from shopping_list.views import ShoppingListViewSet
 
 router = routers.DefaultRouter()
 router.register(r'shops', ShopsViewSet)
 router.register(r'receipts', ReceiptsViewSet)
 router.register(r'articles', ArticleViewSet)
+router.register(r'shopping-lists', ShoppingListViewSet)
 
 urlpatterns = [
     re_path(r'^', include(router.urls)),

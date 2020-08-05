@@ -13,6 +13,13 @@ class ShoppingList(models.Model):
     class Meta:
         ordering = ('item_name', 'created_on', 'updated_on',)
 
+    @property
+    def measurement(self):
+        return {
+            "product": self.productmeasurement.measurement,
+            "purchase": self.purchasemeasurement.measurement,
+        }
+
 
 class Measurement(models.Model):
     quantity = models.FloatField(default=1, )
@@ -23,6 +30,10 @@ class Measurement(models.Model):
 
     def __str__(self):
         return f'{self.quantity}{self.unit}'
+
+    @property
+    def measurement(self):
+        return dict(quantity=self.quantity, unit=self.unit)
 
 
 class ProductMeasurement(Measurement):

@@ -19,6 +19,7 @@ def user_receipt_upload_path(instance, filename):
 class Receipt(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL)
     receipt = models.ImageField(upload_to=user_receipt_upload_path)
+    description = models.CharField(max_length=250, null=True, blank=True, default=None, )
     uploaded_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 

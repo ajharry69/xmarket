@@ -2,10 +2,12 @@ from django.db import models
 
 from shop.models import Shop
 
+PRODUCT_NAME_LENGTH = 255
+
 
 class Product(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
-    name = models.CharField(max_length=255, )
+    name = models.CharField(max_length=PRODUCT_NAME_LENGTH, )
     unit_price = models.DecimalField(decimal_places=2, max_digits=20, )
     added_on = models.DateTimeField(auto_now_add=True, )
     updated_on = models.DateTimeField(auto_now=True, )

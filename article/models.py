@@ -28,6 +28,9 @@ class Article(models.Model):
     class Meta:
         ordering = ('publication_date', 'creation_time', 'update_time',)
 
+    def __str__(self):
+        return self.headline
+
 
 class Media(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE)

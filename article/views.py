@@ -17,14 +17,16 @@ class ArticleViewSet(viewsets.ModelViewSet):
         serializer = self._create_write_serializer(request)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
-            return Response(data=serializer.data, status=status.HTTP_201_CREATED)
+            return Response(data=serializer.data, status=status.HTTP_201_CREATED,
+                            headers=self.get_success_headers(serializer.data))
         return super().create(request, *args, **kwargs)
 
     def update(self, request, *args, **kwargs):
         serializer = self._create_write_serializer(request, self.get_object())
         if serializer.is_valid(raise_exception=True):
             serializer.save()
-            return Response(data=serializer.data, status=status.HTTP_200_OK)
+            return Response(data=serializer.data, status=status.HTTP_200_OK,
+                            headers=self.get_success_headers(serializer.data))
         return super().update(request, *args, **kwargs)
 
     def _create_write_serializer(self, request, instance=None):

@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.core.files import uploadedfile
+from rest_framework import status
 from rest_framework.reverse import reverse
 from rest_framework.test import APITestCase
 
@@ -17,7 +18,7 @@ class TestArticleViewSet(APITestCase):
             'content': 'c1',
         })
 
-        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_add_article_with_media(self):
         file1 = uploadedfile.SimpleUploadedFile('file.jpg', b'content', 'image/jpeg')
@@ -28,4 +29,4 @@ class TestArticleViewSet(APITestCase):
             'article': {'headline': 'h1', 'content': 'c1', },
         }, format='multipart')
 
-        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)

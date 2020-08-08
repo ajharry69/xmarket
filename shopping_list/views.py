@@ -13,3 +13,7 @@ class ShoppingListViewSet(viewsets.ModelViewSet):
 
     def perform_update(self, serializer):
         serializer.save(owner=self.request.user)
+
+    def get_queryset(self):
+        user = self.request.user
+        return super().get_queryset() if user.is_superuser else models.ShoppingList.objects.filter(owner=user)

@@ -28,7 +28,7 @@ class ReceiptsViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        return models.Receipt.objects.all() if user.is_superuser else models.Receipt.objects.filter(owner=user)
+        return super().get_queryset() if user.is_superuser else models.Receipt.objects.filter(owner=user)
 
     def perform_update(self, serializer):
         serializer.save(owner=self.request.user)

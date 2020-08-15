@@ -3,6 +3,8 @@ from hashlib import md5
 
 from PIL import Image
 from django.db import models
+from imagekit.models.fields import ImageSpecField
+from imagekit.processors import ResizeToFill
 from xauth import models as xmodels
 from xauth.utils import valid_str
 
@@ -33,6 +35,13 @@ class User(xmodels.AbstractUser):
     photo = models.ImageField(
         upload_to=photo_upload_path,
         null=True, blank=True, default=None,
+    )
+    photo_thumbnail = ImageSpecField(
+        source='photo', format='JPEG',
+        processors=[
+            ResizeToFill(100, 100),
+        ],
+        options={'quality': 75},
     )
 
     def save(self, *args, **kwargs):

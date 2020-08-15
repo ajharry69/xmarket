@@ -7,17 +7,25 @@ from user.serializers.profile import PublicProfileSerializer
 
 
 class ArticleMediaSerializer(serializers.ModelSerializer):
+    content = serializers.FileField(write_only=True)
+    url = serializers.SerializerMethodField(method_name='get_media_url', read_only=True, )
+    thumbnail_url = serializers.SerializerMethodField(method_name='get_media_thumbnail_url', read_only=True, )
+
     class Meta:
         model = models.Media
-        fields = ('content',)
-
-    def to_representation(self, instance):
-        return f'{self.get_media_url(instance)}'
+        fields = ('id', 'url', 'thumbnail_url', 'content',)
+        read_only = ('id',)
 
     def get_media_url(self, media):
+        return self._get_url(media.content)
+
+    def get_media_thumbnail_url(self, media):
+        return self._get_url(media.content_thumbnail)
+
+    def _get_url(self, file):
         url = None
         try:
-            url = self.context.get('request').build_absolute_uri(media.content.url)
+            url = self.context.get('request').build_absolute_uri(file.url)
         finally:
             return url
 
@@ -25,12 +33,14 @@ class ArticleMediaSerializer(serializers.ModelSerializer):
 class ArticleSerializer(serializers.HyperlinkedModelSerializer):
     author = PublicProfileSerializer(read_only=True)
     publication_date = serializers.DateTimeField(format="%Y-%m-%d", required=False)
-    media_urls = ArticleMediaSerializer(source='media_set',
-                                        many=True, read_only=True, allow_null=True, default=None, )
+    media = ArticleMediaSerializer(source='media_set',
+                                   many=True, read_only=True, allow_null=True, default=None, )
 
     class Meta:
         model = models.Article
-        fields = ('url', 'id', 'headline', 'content', 'publication_date', 'author', 'media_urls',)
+        fields = (
+            'url', 'id', 'headline', 'content', 'publication_date', 'creation_time', 'update_time', 'author',
+            'media', 'tags',)
         read_only_fields = ('id',)
 
 

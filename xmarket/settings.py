@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_celery_results',
     'django_extensions',
+    'imagekit',
+    'sorl.thumbnail',
 ]
 
 MIDDLEWARE = [

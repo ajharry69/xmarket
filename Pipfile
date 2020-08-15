@@ -18,6 +18,9 @@ geopy = "*"
 stripe = "*"
 squareup = "*"
 braintree = "*"
+preview-generator = "*"
+django-imagekit = "*"
+sorl-thumbnail = "*"
 
 [requires]
 python_version = "3.8"

@@ -4,6 +4,7 @@ from hashlib import md5
 
 from django.conf import settings
 from django.db import models
+from django.db.models import Q
 from django.utils import timezone
 from django.utils.datetime_safe import datetime
 
@@ -36,6 +37,16 @@ class Article(models.Model):
     class Meta:
         ordering = ('publication_date', 'creation_time', 'update_time',)
 
+    @property
+    def media_thumbnail(self):
+        latest_media = self.media_set.filter(
+            Q(content_thumbnail__isnull=False) |
+            Q(content__iregex=r'.+\.((jp[e]?g)|(png))'),
+        ).order_by('-id').first()
+        if latest_media:
+            return (latest_media.content_thumbnail if latest_media.content_thumbnail else latest_media.content).url
+        return latest_media
+
     def __str__(self):
         return self.headline
 
@@ -63,6 +74,9 @@ class Media(models.Model):
         # clean up thumbnail generation metadata
         shutil.rmtree(cache_path, ignore_errors=True)
         return thumbnail
+
+    def __str__(self):
+        return self.content.url
 
 
 class Comments(models.Model):

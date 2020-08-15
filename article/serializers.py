@@ -13,7 +13,7 @@ class ArticleMediaSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Media
-        fields = ('id', 'url', 'thumbnail_url', 'content',)
+        fields = ('id', 'article_id', 'url', 'thumbnail_url', 'content',)
         read_only = ('id',)
 
     def get_media_url(self, media):
@@ -35,13 +35,18 @@ class ArticleSerializer(serializers.HyperlinkedModelSerializer):
     publication_date = serializers.DateTimeField(format="%Y-%m-%d", required=False)
     media = ArticleMediaSerializer(source='media_set',
                                    many=True, read_only=True, allow_null=True, default=None, )
+    media_thumbnail = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = models.Article
         fields = (
             'url', 'id', 'headline', 'content', 'publication_date', 'creation_time', 'update_time', 'author',
-            'media', 'tags',)
+            'media_thumbnail', 'media', 'tags',)
         read_only_fields = ('id',)
+
+    def get_media_thumbnail(self, instance):
+        thumbnail = instance.media_thumbnail
+        return self.context.get('request').build_absolute_uri(thumbnail) if thumbnail else None
 
 
 class ArticleRequestSerializer(serializers.Serializer):

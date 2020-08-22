@@ -2,6 +2,7 @@ import json
 
 from rest_framework import viewsets, parsers, status
 from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from xauth import permissions
 
@@ -30,7 +31,11 @@ class ArticleViewSet(viewsets.ModelViewSet):
                             headers=self.get_success_headers(serializer.data))
         return super().update(request, *args, **kwargs)
 
-    @action(detail=True, description="[un-]flag an article as appropriate")
+    def get_permissions(self):
+        return [permission() for permission in
+                [IsAuthenticated]] if self.action == 'flag' else super().get_permissions()
+
+    @action(methods=['POST', 'PUT', 'PATCH'], detail=True, description="[un-]flag an article as appropriate")
     def flag(self, request, *args, **kwargs):
         flagger, article = self.request.user, self.get_object()
         flag, created = models.Flags.objects.get_or_create(flagger_id=flagger.id, article_id=article.id)

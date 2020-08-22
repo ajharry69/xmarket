@@ -6,6 +6,15 @@ from article import models
 from user.serializers.profile import PublicProfileSerializer
 
 
+class CommentSerializer(serializers.ModelSerializer):
+    author = PublicProfileSerializer(read_only=True, )
+
+    class Meta:
+        model = models.Comments
+        fields = ('id', 'article_id', 'message', 'post_time', 'update_time', 'author',)
+        read_only_fields = ('id', 'post_time', 'update_time',)
+
+
 class ArticleMediaSerializer(serializers.ModelSerializer):
     content = serializers.FileField(write_only=True)
     url = serializers.SerializerMethodField(method_name='get_media_url', read_only=True, )

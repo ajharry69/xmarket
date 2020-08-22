@@ -26,4 +26,8 @@ urlpatterns = [
         view=ProductDetailView.as_view(),
         name='product-detail',
     ),
+    re_path(
+        r'^articles/(?P<article_id>[0-9]+)/',
+        include('article.urls'),
+    )
 ]

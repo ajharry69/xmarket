@@ -67,7 +67,7 @@ class Media(models.Model):
         from preview_generator.manager import PreviewManager
         cache_path = self.cache_path
         manager = PreviewManager(cache_path, create_folder=True)
-        thumbnail = manager.get_jpeg_preview(self.content.path, width=150, height=80, force=True)
+        thumbnail = manager.get_jpeg_preview(self.content.path, width=200, height=150, force=True)
         with open(thumbnail, 'rb') as f:
             # save the thumbnail to the db
             self.content_thumbnail.save(thumbnail, f)
@@ -80,7 +80,7 @@ class Media(models.Model):
 
 
 class Comments(models.Model):
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
     message = models.CharField(max_length=250, )
     post_time = models.DateTimeField(auto_now_add=True)

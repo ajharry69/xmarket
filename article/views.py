@@ -41,3 +41,18 @@ class ArticleViewSet(viewsets.ModelViewSet):
             data={'article': article, 'media': media},
             context=self.get_serializer_context(),
         )
+
+
+class CommentViewSet(viewsets.ModelViewSet):
+    queryset = models.Comments.objects.all()
+    serializer_class = serializers.CommentSerializer
+    permission_classes = [permissions.IsOwnerOrSuperuserOrReadOnly]
+
+    def perform_create(self, serializer):
+        self.perform_update(serializer)
+
+    def perform_update(self, serializer):
+        serializer.save(author=self.request.user, article_id=self.kwargs.get('article_id'), )
+
+    def get_queryset(self):
+        return models.Comments.objects.filter(article_id=self.kwargs.get('article_id'), )

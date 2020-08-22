@@ -15,12 +15,12 @@ class MultipleFieldLookupMixin(object):
         lookup_fields = list(self.lookup_fields) if isinstance(self.lookup_fields, (tuple, list, set)) and len(
             self.lookup_fields) > 0 else [self.lookup_field]
 
-        filter = {}
+        _filter = {}
         for field in [lu for lu in lookup_fields if lu]:
             if self.kwargs[field]:  # Ignore empty fields.
-                filter[field] = self.kwargs[field]
+                _filter[field] = self.kwargs[field]
 
-        obj = get_object_or_404(queryset, **filter)  # Lookup the object
+        obj = get_object_or_404(queryset, **_filter)  # Lookup the object
         self.check_object_permissions(self.request, obj)
         return obj
 

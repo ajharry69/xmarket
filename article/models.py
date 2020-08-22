@@ -31,11 +31,19 @@ class Article(models.Model):
     content = models.TextField(null=False, )
     publication_date = models.DateTimeField(default=timezone.now)
     tags = models.JSONField(null=True, default=list)
+    flag_count = models.IntegerField(default=0)
     creation_time = models.DateTimeField(auto_now_add=True)
     update_time = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ('publication_date', 'creation_time', 'update_time',)
+
+    def in_flaggers(self, flagger_id):
+        return self.flags_set.filter(flagger_id=flagger_id).first() is not None
+
+    @property
+    def comments_count(self):
+        return self.comments_set.all().count()
 
     @property
     def media_thumbnail(self):
@@ -85,3 +93,9 @@ class Comments(models.Model):
     message = models.CharField(max_length=250, )
     post_time = models.DateTimeField(auto_now_add=True)
     update_time = models.DateTimeField(auto_now=True)
+
+
+class Flags(models.Model):
+    flagger = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True, )

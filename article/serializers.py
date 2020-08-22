@@ -45,13 +45,17 @@ class ArticleSerializer(serializers.HyperlinkedModelSerializer):
     media = ArticleMediaSerializer(source='media_set',
                                    many=True, read_only=True, allow_null=True, default=None, )
     media_thumbnail = serializers.SerializerMethodField(read_only=True)
+    flagged_by_me = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = models.Article
         fields = (
-            'url', 'id', 'headline', 'content', 'publication_date', 'creation_time', 'update_time', 'author',
-            'media_thumbnail', 'media', 'tags',)
-        read_only_fields = ('id',)
+            'url', 'id', 'headline', 'content', 'comments_count', 'flag_count', 'flagged_by_me', 'publication_date',
+            'creation_time', 'update_time', 'author', 'media_thumbnail', 'media', 'tags',)
+        read_only_fields = ('id', 'flag_count', 'comments_count',)
+
+    def get_flagged_by_me(self, instance):
+        return instance.in_flaggers(self.context.get('request').user.id)
 
     def get_media_thumbnail(self, instance):
         thumbnail = instance.media_thumbnail

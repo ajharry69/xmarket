@@ -1,6 +1,7 @@
 import json
 
 from rest_framework import viewsets, parsers, status
+from rest_framework.decorators import action
 from rest_framework.response import Response
 from xauth import permissions
 
@@ -28,6 +29,15 @@ class ArticleViewSet(viewsets.ModelViewSet):
             return Response(data=serializer.data, status=status.HTTP_200_OK,
                             headers=self.get_success_headers(serializer.data))
         return super().update(request, *args, **kwargs)
+
+    @action(detail=True, description="[un-]flag an article as appropriate")
+    def flag(self, request, *args, **kwargs):
+        flagger, article = self.request.user, self.get_object()
+        flag, created = models.Flags.objects.get_or_create(flagger_id=flagger.id, article_id=article.id)
+        if created is False:
+            flag.delete()
+        # return saved flagged/un-flagged article
+        return Response(self.get_serializer(instance=self.get_object()).data)
 
     def _create_write_serializer(self, request, instance=None):
         media, article = None, request.data.get('article') or request.data

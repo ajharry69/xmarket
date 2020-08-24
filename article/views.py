@@ -6,7 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from xauth import permissions
 
-from article import serializers, models
+from article import serializers, models, pagination
 
 
 class ArticleViewSet(viewsets.ModelViewSet):
@@ -14,6 +14,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.ArticleSerializer
     parser_classes = (parsers.MultiPartParser, parsers.JSONParser,)
     permission_classes = (permissions.IsOwnerOrSuperuserOrReadOnly,)
+    pagination_class = pagination.ArticlesPagination
 
     def create(self, request, *args, **kwargs):
         serializer = self._create_write_serializer(request)
@@ -62,6 +63,7 @@ class CommentViewSet(viewsets.ModelViewSet):
     queryset = models.Comments.objects.all()
     serializer_class = serializers.CommentSerializer
     permission_classes = [permissions.IsOwnerOrSuperuserOrReadOnly]
+    pagination_class = pagination.ArticlesPagination
 
     def perform_create(self, serializer):
         self.perform_update(serializer)
